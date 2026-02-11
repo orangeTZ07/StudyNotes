@@ -47,7 +47,8 @@
         <br>
         UEFI相对于legacy的一个重要变化是，它并不根据指定的盘启动顺序进行引导，而是改成直接对所有盘的<strong>EFI</strong>进行扫描。如果扫描期间发现合适的，则按启动顺序进行引导。
         <br>
-        如果之前在某个盘里装过windows,后来进行了简单格式化，换成了linux。这种情况下很有可能<code>/ESP/EFI/Microsoft</code>
+        如果之前在某个盘里装过windows,后来进行了简单格式化，换成了linux。这种情况下很有可能<code>/ESP/EFI/Microsoft</code>会没删干净。
+        <br>
         这种机制下会出现一种情况: 在更新bios后明明设置的是启动linux的grub, 但是bios却一声不吭地把windows给引导了。
         <br>
         <br>
@@ -59,7 +60,7 @@
     <h2>开始解决问题</h2>
     <div>
         <p>鉴于大多数情况下，windows并不会因bios更新而遭殃，所以我们主要讨论linux的修复方法。</p>
-        <p>首先我们需要准备一个u盘，其中需要准备一个可用的<span class="code">Linux镜像</span>, 这里推荐使用<a href="https://mirrors.tuna.tsinghua.edu.cn/archlinux/iso/2026.02.01/archlinux-2026.02.01-x86_64.iso">Arch Linux<sup style="color: lightblue; font-size: smaller;">[点击下载]</sup></a>，因为其精简且使用纯命令行界面，便于输入命令。</p>
+        <p>首先我们需要准备一个u盘，其中需要准备一个可用的<span class="code">Linux镜像</span>, 这里推荐使用<a href="https://mirrors.tuna.tsinghua.edu.cn/archlinux/iso/2026.02.01/archlinux-2026.02.01-x86_64.iso">Arch Linux<sup style="color: lightblue; font-size: smaller;">[点击下载]</sup></a>，因为其精简且为纯命令行界面，便于输入命令。</p>
         <p>之后我们要<a href="https://blog.csdn.net/2401_83666025/article/details/146977986">烧录linux镜像到u盘</a>,烧录完成后我们启动linux</p>
         <br>
         <pre>
