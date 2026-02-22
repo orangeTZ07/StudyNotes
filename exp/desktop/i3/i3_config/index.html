@@ -7,6 +7,20 @@
   <title>i3 Configuration</title>
   <link rel="stylesheet" href="../i3.css">
   <style>
+    body {
+      padding-right: 76px;
+    }
+
+    .i3-sidebar {
+      position: fixed;
+      inset: 0 0 0 auto;
+      width: 280px;
+      height: 100vh;
+      border: 0;
+      z-index: 999;
+      background: transparent;
+    }
+
     main {
       max-width: 980px;
       margin: 0 auto;
@@ -92,6 +106,7 @@
 </head>
 
 <body>
+  <iframe class="i3-sidebar" src="../side_bar.html" title="i3 side bar"></iframe>
   <main>
     <h1>配置文件</h1>
     <p class="explain">这是当前demo图片中所使用的配置文件奥,</p>
@@ -129,26 +144,35 @@
               #
               # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+              # 配置指南: 主键使用 Super/Win 键 (Mod4); 想用 Alt 就改成 Mod1
+              # 依赖: i3-wm (或 i3-gaps)
               set $mod Mod4
 
               # Font for window titles. Will also be used by the bar unless a different font
               # is used in the bar {} block below.
+              # 配置指南: 标题栏与 bar 的字体; "monospace" 由系统字体提供
+              # 依赖: pango, ttf-dejavu (或其他等宽字体包)
               font pango:monospace 16
 
               # codex: remove titlebars and set 1px borders
+              # 配置指南: 全局边框粗细; pixel 1 更轻量
               default_border pixel 1
               default_floating_border pixel 1
 
               # Thinner focus indicator: enforce 1px borders for all windows
+              # 配置指南: 强制所有窗口 1px 边框，保持一致性
               for_window [class="^.*"] border pixel 1
 
               # Gaps (requires i3-gaps)
+              # 配置指南: 设置窗口间距/外边距; smart_* 会在单窗口时自动收紧
+              # 依赖: i3-wm (含 gaps) 或 i3-gaps
               gaps inner 8
               gaps outer 4
               smart_gaps on
               smart_borders on
 
               # codex: border colors (orange)
+              # 配置指南: 主题色与边框色，改这里即可统一配色
               set $orange #ff9f1a
               set $orange_dark #b35a00
               client.focused $orange $orange $orange
@@ -164,6 +188,8 @@
 
               # Start XDG autostart .desktop files using dex. See also
               # https://wiki.archlinux.org/index.php/XDG_Autostart
+              # 配置指南: XDG autostart 支持; 不用可注释掉
+              # 依赖: dex
               exec --no-startup-id dex --autostart --environment i3
 
               # The combination of xss-lock, nm-applet and pactl is a popular choice, so
@@ -171,27 +197,49 @@
 
               # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
               # screen before suspend. Use loginctl lock-session to lock your screen.
+              # 配置指南: 休眠前自动锁屏; 改成其他锁屏软件也行
+              # 依赖: xss-lock, i3lock
               exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
               # NetworkManager is the most popular way to manage wireless networks on Linux,
               # and nm-applet is a desktop environment-independent system tray GUI for it.
+              # 配置指南: NetworkManager 托盘; 不用托盘可注释
+              # 依赖: network-manager-applet
               exec --no-startup-id nm-applet
 
               # 设置feh使用/home/orgarchorg/Pictures/walls-catppuccin-mocha/3d-model.jpg <span class="code">这里修改壁纸🤓</span>
+              # 配置指南: feh 设置壁纸; 换成自己的路径即可
+              # 依赖: feh
               exec "feh --bg-scale /home/orgarchorg/Pictures/walls-catppuccin-mocha/3d-model.jpg"
 
+              # 配置指南: 设置 DPI 缩放; 根据显示器改数值
+              # 依赖: xorg-xrandr
               exec "xrandr --dpi 144"
+              # 配置指南: 启动 polybar; 路径按实际调整
+              # 依赖: polybar
               exec "bash ~/.config/polybar/launch.sh --docky"
+              # 配置指南: 启动输入法
+              # 依赖: fcitx5
               exec "fcitx5&amp;"
 
               # open picom
+              # 配置指南: 启动合成器; 需要的话再开
+              # 依赖: picom
               exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
               # switch num lock at starting i3
+              # 配置指南: 启动时关闭小键盘; 想要常开就改成 on
+              # 依赖: numlockx
               exec "numlockx off"
 
+              # 配置指南: 自动平铺方向; 适合 vim 风格操作
+              # 依赖: autotiling
               exec_always "autotiling"
               # Use pactl to adjust volume in PulseAudio. <span class="code">这里用pipewire会更好奥，pipewire完全兼容以下配置</span>
+              # 配置指南: 刷新 i3status (若不用 i3status 可删除)
+              # 依赖: i3status
               set $refresh_i3status killall -SIGUSR1 i3status
+              # 配置指南: 音量热键; pipewire-pulse 与 pulseaudio 都支持 pactl
+              # 依赖: pipewire-pulse (或 pulseaudio)
               bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% &amp;&amp;
               $refresh_i3status
               bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% &amp;&amp;
@@ -201,17 +249,23 @@
               bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle &amp;&amp;
               $refresh_i3status
               # 调整亮度
+              # 配置指南: 亮度热键; 需要权限和 backlight 支持
+              # 依赖: brightnessctl
               bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
               bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
               # Use Mouse+$mod to drag floating windows to their wanted position
+              # 配置指南: 浮动窗口拖拽快捷键
               floating_modifier $mod
 
               # move tiling windows via drag &amp; drop by left-clicking into the title bar,
               # or left-clicking anywhere into the window while holding the floating modifier.
+              # 配置指南: 鼠标拖拽平铺窗口; 不习惯可关闭
               tiling_drag modifier titlebar
 
               # start a terminal
+              # 配置指南: 默认终端
+              # 依赖: wezterm
               bindsym $mod+Return exec wezterm
 
               # kill focused window
@@ -219,6 +273,8 @@
 
               # start dmenu (a program launcher)
               # bindsym $mod+d exec --no-startup-id wofi
+              # 配置指南: 应用启动器; 这里用 Alt+Space 呼出 rofi
+              # 依赖: rofi
               bindsym mod1+space exec "rofi -show drun"
               # A more modern dmenu replacement is rofi:
               # bindcode $mod+d exec "rofi -modi drun,run -show drun"
@@ -227,6 +283,8 @@
               # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
               #warpd
+              # 配置指南: 键盘鼠标工具
+              # 依赖: warpd
               bindsym $mod+mod1+x exec "warpd --hint"
 
               # change focus
@@ -373,6 +431,10 @@
               # }
             </code></pre>
         </details>
+        <p class="explain">依赖一键安装（如个别包在你的源里不存在，可能需要启用对应仓库或改用 AUR 版本）。</p>
+        <pre class="code_block"><code>pacman -S --needed i3-wm i3status i3lock xss-lock dex network-manager-applet feh
+            xorg-xrandr polybar fcitx5 picom numlockx autotiling pipewire-pulse brightnessctl wezterm rofi warpd pango
+            ttf-dejavu</code></pre>
       </li>
 
       <li>

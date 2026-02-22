@@ -26,7 +26,7 @@
 
     body {
       margin: 0;
-      padding: 40px 20px 64px;
+      padding: 40px 76px 64px 20px;
       background:
         radial-gradient(900px 500px at 10% -20%, rgba(50, 240, 160, 0.18), transparent),
         radial-gradient(800px 400px at 90% 0%, rgba(255, 122, 199, 0.2), transparent),
@@ -164,15 +164,26 @@
     p {
       margin: 0 0 10px;
     }
+
+    .i3-sidebar {
+      position: fixed;
+      inset: 0 0 0 auto;
+      width: 280px;
+      height: 100vh;
+      border: 0;
+      z-index: 999;
+      background: transparent;
+    }
   </style>
 </head>
 
 <body>
+  <iframe class="i3-sidebar" src="../side_bar.html" title="i3 side bar"></iframe>
   <h1>从窗口管理器到桌面环境🤓</h1>
   <p class="warning">
-    由于orange十分倾向于键盘流，而替代鼠标的一个绝佳工具warpd在使用时需要使用<span class="code">虚拟指针</span>。
+    由于欧润吉十分倾向于键盘流，而替代鼠标的一个绝佳工具warpd在使用时需要使用<span class="code">虚拟指针</span>。
     但是在 <span class="code">wayland</span>中出于安全考虑，默认不允许应用进行全局输入注入/创建全局虚拟指针，需要合成器与相关协议支持(好事/坏事🤔)。
-    所以orange反复琢磨之下还是回退到了 <span class="code">X11</span>，并且选择了 <span class="code">i3</span> 作为窗口管理器awa。
+    所以欧润吉反复琢磨之下还是回退到了 <span class="code">X11</span>，并且选择了 <span class="code">i3</span> 作为窗口管理器awa。
     <br>
     因此，<strong style="color: darkorange"><em>本文将从i3出发,以Arch Linux为例</em></strong>，一步步理解和构建一个美观的x11桌面环境。
     <br>
