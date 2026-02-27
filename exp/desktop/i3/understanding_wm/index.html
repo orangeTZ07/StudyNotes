@@ -174,12 +174,36 @@
       z-index: 999;
       background: transparent;
     }
+
+    .cta {
+      margin: 18px auto 26px;
+      padding: 18px 20px;
+      border-radius: 16px;
+      background: linear-gradient(120deg, rgba(50, 240, 160, 0.22), rgba(255, 122, 199, 0.18));
+      border: 1px solid rgba(50, 240, 160, 0.4);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .cta a {
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      font-size: 1.05rem;
+    }
+
+    .cta span {
+      color: var(--neon);
+    }
   </style>
 </head>
 
 <body>
   <iframe class="i3-sidebar" src="../side_bar.html" title="i3 side bar"></iframe>
   <h1>从窗口管理器到桌面环境🤓</h1>
+  <div class="cta">
+    <a href="dpi.html">想把界面调到刚刚好？<span>立即阅读 DPI / 缩放调校指南 →</span></a>
+  </div>
   <p class="warning">
     由于欧润吉十分倾向于键盘流，而替代鼠标的一个绝佳工具warpd在使用时需要使用<span class="code">虚拟指针</span>。
     但是在 <span class="code">wayland</span>中出于安全考虑，默认不允许应用进行全局输入注入/创建全局虚拟指针，需要合成器与相关协议支持(好事/坏事🤔)。
